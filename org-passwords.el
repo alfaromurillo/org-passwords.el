@@ -54,8 +54,8 @@
 ;;   `org-passwords-random-words-substitutions'.
 
 ;; It is also useful to set up keybindings for the functions
-;; `org-passwords-interprogram-cut-username' and
-;; `org-passwords-interprogram-cut-password' in the
+;; `org-passwords-copy-username' and
+;; `org-passwords-copy-password' in the
 ;; `org-passwords-mode', to easily make the passwords and usernames
 ;; available to the facility for pasting text of the window system
 ;; (clipboard on X and MS-Windows, pasteboard on Nextstep/Mac OS,
@@ -66,10 +66,10 @@
 ;;     '(progn
 ;;        (define-key org-passwords-mode-map
 ;; 	 (kbd "C-c u")
-;; 	 'org-passwords-interprogram-cut-username)
+;; 	 'org-passwords-copy-username)
 ;;        (define-key org-passwords-mode-map
 ;; 	 (kbd "C-c p")
-;; 	 'org-passwords-interprogram-cut-password)))
+;; 	 'org-passwords-copy-password)))
 
 ;; Finally, to enter new passwords, you can use `org-capture' and a minimal template like:
          
@@ -136,7 +136,7 @@ the file is considered a word."
 `universal-argument'. Each element is pair of
 strings (SUBSTITUTE-THIS . BY-THIS).")
 
-(defun org-passwords-interprogram-cut-password ()
+(defun org-passwords-copy-password ()
   "Makes the password available to other programs. Puts the
 password of the entry at the location of the cursor in the
 facility for pasting text of the window system (clipboard on X
@@ -154,7 +154,7 @@ putting it in the kill ring."
 							(end-of-line)
 							(point)))))))
 
-(defun org-passwords-interprogram-cut-username ()
+(defun org-passwords-copy-username ()
   "Makes the password available to other programs. Puts the
 username of the entry at the location of the cursor in the
 facility for pasting text of the window system (clipboard on X
@@ -338,3 +338,5 @@ Substitutions are made in order of the list, so for example:
     (car list-of-strings)))
 
 (provide 'org-passwords)
+
+;;; org-passwords.el ends here
