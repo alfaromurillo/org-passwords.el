@@ -87,6 +87,7 @@
 
 (require 'org)
 
+;;;###autoload
 (define-derived-mode org-passwords-mode org-mode
   "org-passwords-mode"
   "Mode for storing passwords"
@@ -172,6 +173,7 @@ putting it in the kill ring."
 							(end-of-line)
 							(point)))))))
 
+;;;###autoload
 (defun org-passwords ()
   "Open the password file. Open the password file defined by the
 variable `org-password-file' in read-only mode and kill that
