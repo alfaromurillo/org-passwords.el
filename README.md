@@ -93,6 +93,27 @@ Note that by default Org does not show the PROPERTIES, so you (or the
 person peeking at your computer) never have to see the actual
 password.
 
+If you want to be able to display less sensitive properties while
+still hiding passwords, you could also use different drawers to store
+them:
+
+	* Cards
+	** My main credit card
+	   :PROPERTIES:
+	   :NAMEONCARD: Jorge Alfaro-Murillo
+	   :NUMBER:     1234000000005678
+	   :EXPIRES:    11/19
+	   :CVR:        777
+	   :END:
+       
+       :HIDDEN:
+	   :PIN:        1234
+       :END:
+
+You also need to define this new drawer at the top of the file:
+
+    #+drawers: PROPERTIES HIDDEN
+
 ## Generating passwords
 
 ### Passwords that you won't have to remember
