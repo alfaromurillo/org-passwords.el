@@ -145,15 +145,17 @@ and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
 putting it in the kill ring."
   (interactive)
   (save-excursion
-    (search-backward-regexp "^\\*")
-    (search-forward-regexp (concat "^[[:space:]]*:"
-				   org-passwords-password-property 
-				   ":[[:space:]]*"))
-    (funcall interprogram-cut-function 
-	     (buffer-substring-no-properties (point)
-					     (funcall (lambda ()
-							(end-of-line)
-							(point)))))))
+    (save-restriction
+      (org-narrow-to-subtree)
+      (search-backward-regexp "^\\*")
+      (search-forward-regexp (concat "^[[:space:]]*:"
+                                     org-passwords-password-property
+                                     ":[[:space:]]*"))
+      (funcall interprogram-cut-function
+               (buffer-substring-no-properties (point)
+                                               (funcall (lambda ()
+                                                          (end-of-line)
+                                                          (point))))))))
 
 (defun org-passwords-copy-username ()
   "Makes the password available to other programs. Puts the
@@ -163,15 +165,17 @@ and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
 putting it in the kill ring."
   (interactive)
   (save-excursion
-    (search-backward-regexp "^\\*")
-    (search-forward-regexp (concat "^[[:space:]]*:" 
-				   org-passwords-username-property 
-				   ":[[:space:]]*"))
-    (funcall interprogram-cut-function 
-	     (buffer-substring-no-properties (point)
-					     (funcall (lambda ()
-							(end-of-line)
-							(point)))))))
+    (save-restriction
+      (org-narrow-to-subtree)
+      (search-backward-regexp "^\\*")
+      (search-forward-regexp (concat "^[[:space:]]*:"
+                                     org-passwords-username-property
+                                     ":[[:space:]]*"))
+      (funcall interprogram-cut-function
+               (buffer-substring-no-properties (point)
+                                               (funcall (lambda ()
+                                                          (end-of-line)
+                                                          (point))))))))
 
 ;;;###autoload
 (defun org-passwords ()
