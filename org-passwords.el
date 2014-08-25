@@ -98,12 +98,12 @@
   :group 'org)
 
 (defcustom org-passwords-password-property "PASSWORD"
-  "Name of the property for password entry password."
+  "Name of the property for password entry."
   :type 'string
   :group 'org-passwords)
 
 (defcustom org-passwords-username-property "USERNAME"
-  "Name of the property for password entry user name."
+  "Name of the property for user name entry."
   :type 'string
   :group 'org-passwords)
 
