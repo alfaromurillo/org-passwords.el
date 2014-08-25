@@ -54,13 +54,12 @@
 ;;   `org-passwords-random-words-substitutions'.
 
 ;; It is also useful to set up keybindings for the functions
-;; `org-passwords-copy-username' and
-;; `org-passwords-copy-password' in the
-;; `org-passwords-mode', to easily make the passwords and usernames
-;; available to the facility for pasting text of the window system
-;; (clipboard on X and MS-Windows, pasteboard on Nextstep/Mac OS,
-;; etc.), without inserting them in the kill-ring. You can set for
-;; example:
+;; `org-passwords-copy-username', `org-passwords-copy-password' and
+;; `org-passwords-open-url' in the `org-passwords-mode', to easily
+;; make the passwords and usernames available to the facility for
+;; pasting text of the window system (clipboard on X and MS-Windows,
+;; pasteboard on Nextstep/Mac OS, etc.), without inserting them in the
+;; kill-ring. You can set for example:
 
 ;;   (eval-after-load "org-passwords"
 ;;     '(progn
@@ -70,8 +69,8 @@
 ;;        (define-key org-passwords-mode-map
 ;; 	 (kbd "C-c p")
 ;; 	 'org-passwords-copy-password)
-;; 	 (kbd "C-c u")
-;; 	 'org-passwords-browse-url)))
+;; 	 (kbd "C-c o")
+;; 	 'org-passwords-open-url)))
 
 ;; Finally, to enter new passwords, you can use `org-capture' and a minimal template like:
          
@@ -180,7 +179,7 @@ putting it in the kill ring."
            (org-passwords-get-property
             org-passwords-username-property)))
 
-(defun org-passwords-browse-url ()
+(defun org-passwords-open-url ()
   "Browse the URL associated with the entry at the location of
 the cursor."
   (interactive)
