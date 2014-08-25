@@ -69,7 +69,9 @@
 ;; 	 'org-passwords-copy-username)
 ;;        (define-key org-passwords-mode-map
 ;; 	 (kbd "C-c p")
-;; 	 'org-passwords-copy-password)))
+;; 	 'org-passwords-copy-password)
+;; 	 (kbd "C-c u")
+;; 	 'org-passwords-browse-url)))
 
 ;; Finally, to enter new passwords, you can use `org-capture' and a minimal template like:
          
@@ -104,6 +106,11 @@
 
 (defcustom org-passwords-username-property "USERNAME"
   "Name of the property for user name entry."
+  :type 'string
+  :group 'org-passwords)
+
+(defcustom org-passwords-url-property "URL"
+  "Name of the property for URL entry."
   :type 'string
   :group 'org-passwords)
 
@@ -172,6 +179,14 @@ putting it in the kill ring."
   (funcall interprogram-cut-function
            (org-passwords-get-property
             org-passwords-username-property)))
+
+(defun org-passwords-browse-url ()
+  "Browse the URL associated with the entry at the location of
+the cursor."
+  (interactive)
+  (browse-url
+           (org-passwords-get-property
+            org-passwords-url-property)))
 
 ;;;###autoload
 (defun org-passwords ()
