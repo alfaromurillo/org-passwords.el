@@ -56,7 +56,7 @@ passwords of the
 Start out by defining your passwords file and a dictionary file, for
 example:
 
-	(require org-passwords)
+	(require 'org-passwords)
 	(setq org-passwords-file "~/documents/passwords.gpg")
 	(setq org-passwords-random-words-dictionary "/etc/dictionaries-common/words")
 
