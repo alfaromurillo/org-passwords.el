@@ -137,6 +137,20 @@ the file is considered a word."
 `universal-argument'. Each element is pair of
 strings (SUBSTITUTE-THIS . BY-THIS).")
 
+(defun org-passwords-get-property (property)
+  "Retrieve the named property from the current entry."
+  (save-excursion
+    (save-restriction
+      (org-narrow-to-subtree)
+      (search-backward-regexp "^\\*")
+      (search-forward-regexp (concat "^[[:space:]]*:"
+                                     property
+                                     ":[[:space:]]*"))
+      (buffer-substring-no-properties (point)
+                                      (funcall (lambda ()
+                                                 (end-of-line)
+                                                 (point)))))))
+
 (defun org-passwords-copy-password ()
   "Makes the password available to other programs. Puts the
 password of the entry at the location of the cursor in the
@@ -144,18 +158,9 @@ facility for pasting text of the window system (clipboard on X
 and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
 putting it in the kill ring."
   (interactive)
-  (save-excursion
-    (save-restriction
-      (org-narrow-to-subtree)
-      (search-backward-regexp "^\\*")
-      (search-forward-regexp (concat "^[[:space:]]*:"
-                                     org-passwords-password-property
-                                     ":[[:space:]]*"))
-      (funcall interprogram-cut-function
-               (buffer-substring-no-properties (point)
-                                               (funcall (lambda ()
-                                                          (end-of-line)
-                                                          (point))))))))
+  (funcall interprogram-cut-function
+           (org-passwords-get-property
+            org-passwords-password-property)))
 
 (defun org-passwords-copy-username ()
   "Makes the password available to other programs. Puts the
@@ -164,18 +169,9 @@ facility for pasting text of the window system (clipboard on X
 and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
 putting it in the kill ring."
   (interactive)
-  (save-excursion
-    (save-restriction
-      (org-narrow-to-subtree)
-      (search-backward-regexp "^\\*")
-      (search-forward-regexp (concat "^[[:space:]]*:"
-                                     org-passwords-username-property
-                                     ":[[:space:]]*"))
-      (funcall interprogram-cut-function
-               (buffer-substring-no-properties (point)
-                                               (funcall (lambda ()
-                                                          (end-of-line)
-                                                          (point))))))))
+  (funcall interprogram-cut-function
+           (org-passwords-get-property
+            org-passwords-username-property)))
 
 ;;;###autoload
 (defun org-passwords ()
