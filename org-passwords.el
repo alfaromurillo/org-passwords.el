@@ -190,14 +190,19 @@ the cursor."
 			    t)))
 
 ;;;###autoload
-(defun org-passwords ()
+(defun org-passwords (&optional arg)
   "Open the password file. Open the password file defined by the
 variable `org-password-file' in read-only mode and kill that
 buffer later according to the value of the variable
 `org-passwords-time-opened'. It also adds the `org-password-file'
 to the auto-mode-alist so that it is opened with its mode being
-`org-passwords-mode'."
-  (interactive)
+`org-passwords-mode'.
+
+With prefix arg ARG, the command does not set up a timer to kill the buffer.
+
+With a double prefix arg \\[universal-argument] \\[universal-argument], open the file for editing.
+"
+  (interactive "P")
   (if org-passwords-file
       (progn
 	(add-to-list 'auto-mode-alist
@@ -205,8 +210,13 @@ to the auto-mode-alist so that it is opened with its mode being
 		      (regexp-quote
 		       (expand-file-name org-passwords-file))
 		      'org-passwords-mode))
-	(find-file-read-only org-passwords-file)
-	(org-passwords-set-up-kill-password-buffer))
+	(if (equal arg '(4))
+	    (find-file-read-only org-passwords-file)
+	  (if (equal arg '(16))
+	      (find-file org-passwords-file)
+	    (progn
+	      (find-file-read-only org-passwords-file)
+	      (org-passwords-set-up-kill-password-buffer)))))
     (minibuffer-message "No default password file defined. Set the variable `org-password-file'.")))
 
 (defun org-passwords-set-up-kill-password-buffer ()
