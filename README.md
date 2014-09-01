@@ -1,4 +1,4 @@
-# org-passwords.el 
+# org-passwords.el
 
 A password manager for [Org](http://orgmode.org/).
 
@@ -20,7 +20,7 @@ of the form:
       :USERNAME: jorge
       :PASSWORD: 123456
       :END:
-	  
+
 	  Some notes about the website that will help to find the entry
       fast with a C-s.
 
@@ -44,6 +44,25 @@ But you can keep more than that, for example:
 	   :PIN:        1234
 	   :CVR:        888
 	   :END:
+
+Or having shared properties for several entries:
+
+	* Gmail
+    :PROPERTIES:
+	:URL:      https://www.gmail.com
+	:END:
+
+	** Main account
+	:PROPERTIES:
+	:USERNAME: jorge
+	:PASSWORD: 12345
+	:END:
+
+	** Spam account
+	:PROPERTIES:
+	:USERNAME: jorge.spam
+	:PASSWORD: 54321
+	:END:
 
 org-passwords gives a mode derived from Org to consult the database
 file and copy passwords, and functions for generating the passwords.
@@ -110,7 +129,7 @@ them:
 	   :EXPIRES:    11/19
 	   :CVR:        777
 	   :END:
-       
+
        :HIDDEN:
 	   :PIN:        1234
        :END:
@@ -187,7 +206,7 @@ available to the facility for pasting text. You can set for example:
 ### Making new entries in the database
 
 To enter new passwords, you can use 'org-capture' and a minimal template like:
-         
+
     ("p" "password" entry (file "~/documents/passwords.gpg")
      "* %^{Title}\n  %^{PASSWORD}p %^{USERNAME}p")
 

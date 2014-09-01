@@ -76,7 +76,7 @@
 
 ;; Finally, to enter new passwords, you can use `org-capture' and a
 ;; minimal template like:
-         
+
 ;;   ("p" "password" entry (file "~/documents/passwords.gpg")
 ;;    "* %^{Title}\n  %^{URL}p %^{USERNAME}p %^{PASSWORD}p")
 
@@ -146,20 +146,6 @@ the file is considered a word."
 `universal-argument'. Each element is pair of
 strings (SUBSTITUTE-THIS . BY-THIS).")
 
-(defun org-passwords-get-property (property)
-  "Retrieve the named property from the current entry."
-  (save-excursion
-    (save-restriction
-      (org-narrow-to-subtree)
-      (beginning-of-buffer)
-      (search-forward-regexp (concat "^[[:space:]]*:"
-                                     property
-                                     ":[[:space:]]*"))
-      (buffer-substring-no-properties (point)
-                                      (funcall (lambda ()
-                                                 (end-of-line)
-                                                 (point)))))))
-
 (defun org-passwords-copy-password ()
   "Makes the password available to other programs. Puts the
 password of the entry at the location of the cursor in the
@@ -168,8 +154,8 @@ and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
 putting it in the kill ring."
   (interactive)
   (funcall interprogram-cut-function
-           (org-passwords-get-property
-            org-passwords-password-property)))
+           (org-entry-get (point)
+			  org-passwords-password-property)))
 
 (defun org-passwords-copy-username ()
   "Makes the password available to other programs. Puts the
@@ -179,16 +165,17 @@ and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
 putting it in the kill ring."
   (interactive)
   (funcall interprogram-cut-function
-           (org-passwords-get-property
-            org-passwords-username-property)))
+           (org-entry-get (point)
+			  org-passwords-username-property
+			  t)))
 
 (defun org-passwords-open-url ()
   "Browse the URL associated with the entry at the location of
 the cursor."
   (interactive)
-  (browse-url
-           (org-passwords-get-property
-            org-passwords-url-property)))
+  (browse-url (org-entry-get (point)
+			    org-passwords-url-property
+			    t)))
 
 ;;;###autoload
 (defun org-passwords ()
@@ -201,10 +188,10 @@ to the auto-mode-alist so that it is opened with its mode being
   (interactive)
   (if org-passwords-file
       (progn
-	(add-to-list 'auto-mode-alist 
-		     (cons 
-		      (regexp-quote 
-		       (expand-file-name org-passwords-file)) 
+	(add-to-list 'auto-mode-alist
+		     (cons
+		      (regexp-quote
+		       (expand-file-name org-passwords-file))
 		      'org-passwords-mode))
 	(find-file-read-only org-passwords-file)
 	(org-passwords-set-up-kill-password-buffer))
@@ -212,7 +199,7 @@ to the auto-mode-alist so that it is opened with its mode being
 
 (defun org-passwords-set-up-kill-password-buffer ()
   (run-at-time org-passwords-time-opened
-	       nil 
+	       nil
 	       '(lambda ()
 		  (if (get-file-buffer org-passwords-file)
 		      (kill-buffer
@@ -222,15 +209,15 @@ to the auto-mode-alist so that it is opened with its mode being
 
 ;; Set random number seed from current time and pid. Otherwise
 ;; `random' gives the same results every time emacs restarts.
-(random t) 
+(random t)
 
 (defun org-passwords-generate-password (arg)
   "Ask a number of characters and insert a password of that size.
 Password has a random string of numbers, lowercase letters, and
 uppercase letters.  Argument ARG include symbols."
   (interactive "P")
-  (let ((number-of-chars 
-	 (string-to-number 
+  (let ((number-of-chars
+	 (string-to-number
 	  (read-from-minibuffer "Number of Characters: "))))
     (if arg
 	(insert (org-passwords-generate-password-with-symbols "" number-of-chars))
@@ -240,7 +227,7 @@ uppercase letters.  Argument ARG include symbols."
   "Return a string consisting of PREVIOUS-STRING and
 NUMS-OF-CHARS random characters."
   (if (eq nums-of-chars 0) previous-string
-    (insert (org-passwords-generate-password-with-symbols 
+    (insert (org-passwords-generate-password-with-symbols
 	     (concat previous-string
 		     (char-to-string
 		      ;; symbols, letters, numbers are from 33 to 126
@@ -257,21 +244,21 @@ random numbers, lowercase letters, and numbers."
       ; to 57, the uppercase letters from 65 to 90, and the lowercase
       ; from 97 to 122. The following makes each equally likely.
       (let ((temp-value (random 62)))
- 	(cond ((< temp-value 10) 
+ 	(cond ((< temp-value 10)
 	       ; If temp-value<10, then add a number
-	       (org-passwords-generate-password-without-symbols 
+	       (org-passwords-generate-password-without-symbols
 		(concat previous-string
 			(char-to-string (+ 48 temp-value)))
 		(1- nums-of-chars)))
-	      ((and (> temp-value 9) (< temp-value 36)) 
+	      ((and (> temp-value 9) (< temp-value 36))
 	       ; If 9<temp-value<36, then add an uppercase letter
-	       (org-passwords-generate-password-without-symbols 
+	       (org-passwords-generate-password-without-symbols
 		(concat previous-string
 			(char-to-string (+ 65 (- temp-value 10))))
 		(1- nums-of-chars)))
-	      ((> temp-value 35) 
+	      ((> temp-value 35)
                ; If temp-value>35, then add a lowecase letter
-	       (org-passwords-generate-password-without-symbols 
+	       (org-passwords-generate-password-without-symbols
 		(concat previous-string
 			(char-to-string (+ 97 (- temp-value 36))))
 		(1- nums-of-chars)))))))
@@ -306,7 +293,7 @@ the words as defined by
 	  (if arg
 	      org-passwords-random-words-substitutions
 	    nil))))
-    (minibuffer-message 
+    (minibuffer-message
      "No default dictionary file defined. Set the variable `org-passwords-random-words-dictionary'.")))
 
 (defun org-passwords-random-words-attach-number-of-words
@@ -337,10 +324,10 @@ Substitutions are made in order of the list, so for example:
       (concat (org-passwords-concat-this-with-string
 	       (cdar list-of-substitutions)
 	       (mapcar (lambda (x)
-			 (org-passwords-substitute 
-			  x 
+			 (org-passwords-substitute
+			  x
 			  (cdr list-of-substitutions)))
-		       (split-string string-to-change 
+		       (split-string string-to-change
 				     (caar list-of-substitutions)))))
     string-to-change))
 
@@ -351,7 +338,7 @@ Substitutions are made in order of the list, so for example:
   (if (cdr list-of-strings)
       (concat (car list-of-strings)
 	      this
-	      (org-passwords-concat-this-with-string 
+	      (org-passwords-concat-this-with-string
 	       (cdr list-of-strings)
 	       this))
     (car list-of-strings)))
