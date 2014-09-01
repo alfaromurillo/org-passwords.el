@@ -127,11 +127,23 @@ string, a number followed by units."
   :type 'str
   :group 'org-passwords)
 
+(defcustom org-passwords-default-password-size "20"
+  "Default number of characters to use in
+org-passwords-generate-password. It has to be a string."
+  :type 'str
+  :group 'org-passwords)
+
 (defcustom org-passwords-random-words-dictionary nil
   "Default file name for the file that contains a dictionary of
 words for `org-passwords-random-words'. Each non-empty line in
 the file is considered a word."
   :type 'file
+  :group 'org-passwords)
+
+(defcustom org-passwords-default-random-words-number "5"
+  "Default number of words to use in org-passwords-random-words.
+It has to be a string."
+  :type 'str
   :group 'org-passwords)
 
 (defvar org-passwords-random-words-separator "-"
@@ -217,8 +229,15 @@ Password has a random string of numbers, lowercase letters, and
 uppercase letters.  Argument ARG include symbols."
   (interactive "P")
   (let ((number-of-chars
-	 (string-to-number
-	  (read-from-minibuffer "Number of Characters: "))))
+	 (read-from-minibuffer
+	  (concat "Number of characters (default "
+		  org-passwords-default-password-size
+		  "): ")
+	  nil
+	  nil
+	  t
+	  nil
+	  org-passwords-default-password-size)))
     (if arg
 	(insert (org-passwords-generate-password-with-symbols "" number-of-chars))
 	(insert (org-passwords-generate-password-without-symbols "" number-of-chars)))))
@@ -275,8 +294,15 @@ the words as defined by
   (interactive "P")
   (if org-passwords-random-words-dictionary
       (let ((number-of-words
-	     (string-to-number
-	      (read-from-minibuffer "Number of words: ")))
+	     (read-from-minibuffer
+	      (concat "Number of words (default "
+		      org-passwords-default-random-words-number
+		      "): ")
+	      nil
+	      nil
+	      t
+	      nil
+	      org-passwords-default-random-words-number))
 	    (list-of-words
 	     (with-temp-buffer
 	       (insert-file-contents
