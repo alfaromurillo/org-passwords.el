@@ -339,8 +339,8 @@ Substitutions are made in order of the list, so for example:
       (concat (car list-of-strings)
 	      this
 	      (org-passwords-concat-this-with-string
-	       (cdr list-of-strings)
-	       this))
+	       this
+	       (cdr list-of-strings)))
     (car list-of-strings)))
 
 (provide 'org-passwords)
