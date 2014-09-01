@@ -95,9 +95,13 @@ This opens the 'org-passwords-file' in Read-Only mode (to not mess
 with it if you are just consulting the file), and sets a timer of one
 minute after which the buffer of the file is automatically killed. The
 timer can be adjusted with the variable 'org-passwords-time-opened'.
+If you plan to browse for a long time and do want the timer use C-u
+before calling org-passwords. If you want to edit the file as well
+(that is just open it normally) use C-u C-u before calling
+org-passwords.
 
-After this, do a C-s to find your entry, and copy the password to the
-system clipboard (or pasteboard in Mac):
+After having the buffer open, do a C-s to find your entry, and copy
+the password to the system clipboard (or pasteboard in Mac):
 
 	M-x org-passwords-copy-password
 
@@ -109,7 +113,8 @@ If you also forget what your user name is, there is also:
 
 	M-x org-passwords-copy-username
 
-And very useful for accessing the website (in case there is one):
+And very useful for opening the website directly in the browser (in
+case there is one):
 
 	M-x org-passwords-open-url
 
@@ -180,7 +185,8 @@ given as
 
 So the "correcthorsebatterystaple" would be instead
 "c0rr3cth0rs3b@tt3ryst@pl3". Note: I use another system, this is just
-an idea and you are encouraged to change the variable, do:
+an idea and you are encouraged to change the variable, for example you
+could do something like:
 
 	(setq org-passwords-random-words-substitutions
 	      '(("for" . "4") ("s" . "5")))
@@ -208,7 +214,7 @@ available to the facility for pasting text. You can set for example:
 To enter new passwords, you can use 'org-capture' and a minimal template like:
 
     ("p" "password" entry (file "~/documents/passwords.gpg")
-     "* %^{Title}\n  %^{PASSWORD}p %^{USERNAME}p")
+     "* %^{Title}\n  %^{URL}p %^{USERNAME}p %^{PASSWORD}p")
 
 When asked for the password you can then call either
 'org-passwords-generate-password' or 'org-passwords-random-words'.
