@@ -23,7 +23,9 @@
 ;;; Commentary:
 
 ;; This file contains the code for managing your passwords with
-;; Org-mode.
+;; Org-mode. It is part of org/contrib (see http://orgmode.org/). If
+;; you want to contribute with development, or have a problem, do it
+;; here: https://bitbucket.org/alfaromurillo/org-passwords.el
 
 ;; A basic setup needs to indicate a passwords file, and a dictionary
 ;; for the random words:
@@ -72,10 +74,11 @@
 ;; 	 (kbd "C-c o")
 ;; 	 'org-passwords-open-url)))
 
-;; Finally, to enter new passwords, you can use `org-capture' and a minimal template like:
+;; Finally, to enter new passwords, you can use `org-capture' and a
+;; minimal template like:
          
 ;;   ("p" "password" entry (file "~/documents/passwords.gpg")
-;;    "* %^{Title}\n  %^{PASSWORD}p %^{USERNAME}p")
+;;    "* %^{Title}\n  %^{URL}p %^{USERNAME}p %^{PASSWORD}p")
 
 ;; When asked for the password you can then call either
 ;; `org-passwords-generate-password' or `org-passwords-random-words'.

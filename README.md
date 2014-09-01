@@ -16,6 +16,7 @@ of the form:
 
 	* My favorite lol-cat website
       :PROPERTIES:
+	  :URL: http://www.myfavoritelolcat.com
       :USERNAME: jorge
       :PASSWORD: 123456
       :END:
@@ -49,7 +50,7 @@ file and copy passwords, and functions for generating the passwords.
 In particular, for passwords that you DO need to remember (but might
 forget so still want to include in the database) it can create
 passwords of the
-[correcthorsebatterystaple-type](http://xkcd.com/936/).
+[correcthorsebatterystaple](http://xkcd.com/936/)-type.
 
 ## Basic setup
 
@@ -88,6 +89,10 @@ what C-y M-y does, grabs your computer.
 If you also forget what your user name is, there is also:
 
 	M-x org-passwords-copy-username
+
+And very useful for accessing the website (in case there is one):
+
+	M-x org-passwords-open-url
 
 Note that by default Org does not show the PROPERTIES, so you (or the
 person peeking at your computer) never have to see the actual
@@ -200,7 +205,8 @@ Of course, keep your main password file, encrypted. In emacs it is
 enough to for the file to have the file end in .gpg, emacs will tell
 you what to do when saving it. Keep this file in an encrypted drive,
 do not write the password to your main password file in a post-it and
-paste it your desk, etc.
+paste it your desk, do not use "password" or "12345" as your password,
+etc.
 
 ## License
 
