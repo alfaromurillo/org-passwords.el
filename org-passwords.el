@@ -148,7 +148,7 @@ strings (SUBSTITUTE-THIS . BY-THIS).")
   (save-excursion
     (save-restriction
       (org-narrow-to-subtree)
-      (search-backward-regexp "^\\*")
+      (beginning-of-buffer)
       (search-forward-regexp (concat "^[[:space:]]*:"
                                      property
                                      ":[[:space:]]*"))
