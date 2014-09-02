@@ -16,7 +16,7 @@ of the form:
 
 	* My favorite lol-cat website
       :PROPERTIES:
-	  :URL: http://www.myfavoritelolcat.com
+	  :URL:      http://www.myfavoritelolcat.com
       :USERNAME: jorge
       :PASSWORD: 123456
       :END:
@@ -177,16 +177,16 @@ The following does the same, but makes substitutions in the password:
 	C-u M-x org-passwords-random-words
 
 The substitutions are made according to the variable
-'org-passwords-random-words-substitutions', which is a list of pairs
-of strings of the form ("substitute-this" . "by-this"). The default is
-given as
+'org-passwords-random-words-substitutions', which is an alist where
+the keys are the strings to substitute and the associated values are
+the strings to substitute to. The default is:
 
 	(("a" . "@") ("e" . "3") ("o" . "0"))
 
-So the "correcthorsebatterystaple" would be instead
-"c0rr3cth0rs3b@tt3ryst@pl3". Note: I use another system, this is just
-an idea and you are encouraged to change the variable, for example you
-could do something like:
+So the password "correcthorsebatterystaple" would be instead returned
+as "c0rr3cth0rs3b@tt3ryst@pl3". Note: that is just an idea, you are
+encouraged to change the variable, for example you could do something
+like:
 
 	(setq org-passwords-random-words-substitutions
 	      '(("for" . "4") ("s" . "5")))
@@ -207,7 +207,10 @@ available to the facility for pasting text. You can set for example:
            'org-passwords-copy-username)
          (define-key org-passwords-mode-map
            (kbd "C-c p")
-           'org-passwords-copy-password)))
+           'org-passwords-copy-password)
+	     (define-key org-passwords-mode-map
+           (kbd "C-c o")
+           'org-passwords-open-url)))
 
 ### Making new entries in the database
 
