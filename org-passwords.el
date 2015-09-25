@@ -125,11 +125,13 @@
   :type 'file
   :group 'org-passwords)
 
-(defcustom org-passwords-time-opened "1 min"
-  "Time that the password file will remain open. It has to be a
-string, a number followed by units."
+(defcustom org-passwords-kill-password-buffer-timer-time "60"
+  "Time in seconds that the password file will remain open.  It
+may be an integer or a floating point number."
   :type 'str
   :group 'org-passwords)
+
+(setq org-passwords-kill-password-buffer-timer nil)
 
 (defcustom org-passwords-default-password-size "20"
   "Default number of characters to use in
@@ -195,16 +197,12 @@ the cursor."
 
 ;;;###autoload
 (defun org-passwords (&optional arg)
-  "Open the password file. Open the password file defined by the
-variable `org-password-file' in read-only mode and kill that
-buffer later according to the value of the variable
-`org-passwords-time-opened'. It also adds the `org-password-file'
-to the auto-mode-alist so that it is opened with its mode being
-`org-passwords-mode'.
+  "Open the password file.  Open the password file defined by the
+variable `org-password-file' in `org-passwords-mode' as read-only
+and kill that buffer later when emacs is idle according to the
+value of the variable `org-passwords-kill-password-buffer-timer-time'.
 
-With prefix arg ARG, the command does not set up a timer to kill the buffer.
-
-With a double prefix arg \\[universal-argument] \\[universal-argument], open the file for editing.
+With prefix arg ARG, open the file for editing.
 "
   (interactive "P")
   (if org-passwords-file
@@ -214,22 +212,22 @@ With a double prefix arg \\[universal-argument] \\[universal-argument], open the
 		      (regexp-quote
 		       (expand-file-name org-passwords-file))
 		      'org-passwords-mode))
-	(if (equal arg '(4))
-	    (find-file-read-only org-passwords-file)
-	  (if (equal arg '(16))
-	      (find-file org-passwords-file)
-	    (progn
-	      (find-file-read-only org-passwords-file)
-	      (org-passwords-set-up-kill-password-buffer)))))
-    (minibuffer-message "No default password file defined. Set the variable `org-password-file'.")))
+	(if org-passwords-kill-password-buffer-timer
+	    (setq org-passwords-kill-password-buffer-timer nil))
+	(and (or
+	      (and arg (find-file org-passwords-file))
+	      (find-file-read-only org-passwords-file))
+	     (org-passwords-set-up-kill-password-buffer-timer)))
+    (minibuffer-message "No default password file defined.  Set the variable `org-password-file'.")))
 
-(defun org-passwords-set-up-kill-password-buffer ()
-  (run-at-time org-passwords-time-opened
-	       nil
-	       '(lambda ()
-		  (if (get-file-buffer org-passwords-file)
-		      (kill-buffer
-		       (get-file-buffer org-passwords-file))))))
+(defun org-passwords-set-up-kill-password-buffer-timer ()
+  (setq org-passwords-kill-password-buffer-timer
+	(run-with-idle-timer org-passwords-kill-password-buffer-timer-time
+			     nil
+			     '(lambda ()
+				(if (get-file-buffer org-passwords-file)
+				    (kill-buffer
+				     (get-file-buffer org-passwords-file)))))))
 
 ;;; Password generator
 
