@@ -23,7 +23,7 @@
 ;;; Commentary:
 
 ;; This file contains the code for managing your passwords with
-;; Org-mode. It is part of org/contrib (see http://orgmode.org/). If
+;; Org-mode.  It is part of org/contrib (see http://orgmode.org/).  If
 ;; you want to contribute with development, or have a problem, do it
 ;; here: https://bitbucket.org/alfaromurillo/org-passwords.el
 
@@ -61,7 +61,7 @@
 ;; make the passwords and usernames available to the facility for
 ;; pasting text of the window system (clipboard on X and MS-Windows,
 ;; pasteboard on Nextstep/Mac OS, etc.), without inserting them in the
-;; kill-ring. You can set for example:
+;; kill-ring.  You can set for example:
 
 ;;   (eval-after-load "org-passwords"
 ;;     '(progn
@@ -133,13 +133,13 @@ string, a number followed by units."
 
 (defcustom org-passwords-default-password-size "20"
   "Default number of characters to use in
-org-passwords-generate-password. It has to be a string."
+org-passwords-generate-password.  It has to be a string."
   :type 'str
   :group 'org-passwords)
 
 (defcustom org-passwords-random-words-dictionary nil
   "Default file name for the file that contains a dictionary of
-words for `org-passwords-random-words'. Each non-empty line in
+words for `org-passwords-random-words'.  Each non-empty line in
 the file is considered a word."
   :type 'file
   :group 'org-passwords)
@@ -159,11 +159,11 @@ It has to be a string."
     ("o" . "0"))
 "A list of substitutions to be made with
 `org-passwords-random-words' if it is called with
-`universal-argument'. Each element is pair of
+`universal-argument'.  Each element is pair of
 strings (SUBSTITUTE-THIS . BY-THIS).")
 
 (defun org-passwords-copy-password ()
-  "Makes the password available to other programs. Puts the
+  "Makes the password available to other programs.  Puts the
 password of the entry at the location of the cursor in the
 facility for pasting text of the window system (clipboard on X
 and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
@@ -174,7 +174,7 @@ putting it in the kill ring."
 			  org-passwords-password-property)))
 
 (defun org-passwords-copy-username ()
-  "Makes the password available to other programs. Puts the
+  "Makes the password available to other programs.  Puts the
 username of the entry at the location of the cursor in the
 facility for pasting text of the window system (clipboard on X
 and MS-Windows, pasteboard on Nextstep/Mac OS, etc.), without
@@ -233,7 +233,7 @@ With a double prefix arg \\[universal-argument] \\[universal-argument], open the
 
 ;;; Password generator
 
-;; Set random number seed from current time and pid. Otherwise
+;; Set random number seed from current time and pid.  Otherwise
 ;; `random' gives the same results every time emacs restarts.
 (random t)
 
@@ -273,9 +273,9 @@ random numbers, lowercase letters, and numbers."
   (if (eq nums-of-chars 0)
       previous-string
       ; There are 10 numbers, 26 lowercase letters and 26 uppercase
-      ; letters. 10 + 26 + 26 = 62. The number characters go from 48
+      ; letters.  10 + 26 + 26 = 62.  The number characters go from 48
       ; to 57, the uppercase letters from 65 to 90, and the lowercase
-      ; from 97 to 122. The following makes each equally likely.
+      ; from 97 to 122.  The following makes each equally likely.
       (let ((temp-value (random 62)))
  	(cond ((< temp-value 10)
 	       ; If temp-value<10, then add a number
@@ -302,7 +302,7 @@ random numbers, lowercase letters, and numbers."
   "Ask for a number of words and inserts a sequence of that many
 random words from the list in the file
 `org-passwords-random-words-dictionary' separated by
-`org-passwords-random-words-separator'. ARG make substitutions in
+`org-passwords-random-words-separator'.  ARG make substitutions in
 the words as defined by
 `org-passwords-random-words-substitutions'."
   (interactive "P")
@@ -334,7 +334,7 @@ the words as defined by
 	      org-passwords-random-words-substitutions
 	    nil))))
     (minibuffer-message
-     "No default dictionary file defined. Set the variable `org-passwords-random-words-dictionary'.")))
+     "No default dictionary file defined.  Set the variable `org-passwords-random-words-dictionary'.")))
 
 (defun org-passwords-random-words-attach-number-of-words
   (previous-string number-of-words list-of-words separator)
@@ -354,7 +354,7 @@ separated SEPARATOR."
 (defun org-passwords-substitute (string-to-change list-of-substitutions)
   "Substitutes each appearence in STRING-TO-CHANGE of the `car' of
 each element of LIST-OF-SUBSTITUTIONS by the `cdr' of that
-element. For example:
+element.  For example:
  (org-passwords-substitute \"ab\" \'((\"a\" . \"b\") (\"b\" . \"c\")))
        => \"bc\"
 Substitutions are made in order of the list, so for example:
@@ -372,7 +372,7 @@ Substitutions are made in order of the list, so for example:
     string-to-change))
 
 (defun org-passwords-concat-this-with-string (this list-of-strings)
-  "Put the string THIS in between every string in LIST-OF-STRINGS. For example:
+  "Put the string THIS in between every string in LIST-OF-STRINGS.  For example:
  (org-passwords-concat-this-with-string \"Here\" \'(\"First\" \"Second\" \"Third\"))
       => \"FirstHereSencondHereThird\""
   (if (cdr list-of-strings)
