@@ -208,9 +208,12 @@ available to the facility for pasting text. You can set for example:
          (define-key org-passwords-mode-map
            (kbd "C-c p")
            'org-passwords-copy-password)
-	     (define-key org-passwords-mode-map
+         (define-key org-passwords-mode-map
            (kbd "C-c o")
-           'org-passwords-open-url)))
+           '(lambda ()
+              (interactive)
+              (org-passwords-copy-password)
+              (org-passwords-open-url)))))
 
 ### Making new entries in the database
 

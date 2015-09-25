@@ -66,13 +66,17 @@
 ;;   (eval-after-load "org-passwords"
 ;;     '(progn
 ;;        (define-key org-passwords-mode-map
-;; 	 (kbd "C-c u")
-;; 	 'org-passwords-copy-username)
+;;          (kbd "C-c u")
+;;          'org-passwords-copy-username)
 ;;        (define-key org-passwords-mode-map
-;; 	 (kbd "C-c p")
-;; 	 'org-passwords-copy-password)
-;; 	 (kbd "C-c o")
-;; 	 'org-passwords-open-url)))
+;;          (kbd "C-c p")
+;;          'org-passwords-copy-password)
+;;        (define-key org-passwords-mode-map
+;;          (kbd "C-c o")
+;;          '(lambda ()
+;;             (interactive)
+;;             (org-passwords-copy-password)
+;;             (org-passwords-open-url)))))
 
 ;; Finally, to enter new passwords, you can use `org-capture' and a
 ;; minimal template like:
