@@ -125,10 +125,10 @@
   :type 'file
   :group 'org-passwords)
 
-(defcustom org-passwords-kill-password-buffer-timer-time "60"
+(defcustom org-passwords-kill-password-buffer-timer-time 60
   "Time in seconds that the password file will remain open.  It
 may be an integer or a floating point number."
-  :type 'str
+  :type 'number
   :group 'org-passwords)
 
 (setq org-passwords-kill-password-buffer-timer nil)
