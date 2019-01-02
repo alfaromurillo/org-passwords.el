@@ -221,6 +221,10 @@ available to the facility for pasting text. You can set for example:
               (org-passwords-copy-password)
               (org-passwords-open-url)))))
 
+You might also want to add a global key to call 'org-passwords':
+
+    (global-set-key (kbd "C-c q") 'org-passwords)
+
 ### Making new entries in the database
 
 To enter new passwords, you can use 'org-capture' and a minimal template like:
@@ -238,7 +242,7 @@ the minibuffer:
 
 ## Security
 
-Of course, keep your main password file, encrypted. In emacs it is
+Of course, keep your main password file encrypted. In emacs it is
 enough to for the file to have the file end in .gpg, emacs will tell
 you what to do when saving it. Keep this file in an encrypted drive,
 do not write the password to your main password file in a post-it and
