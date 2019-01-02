@@ -83,6 +83,12 @@ example:
 The last line points to the dictionary (a file in which each line is a
 word), the one given above is standard for GNU/Linux systems.
 
+The first line of the 'org-passwords-file' should be:
+
+	# -*- mode: org-passwords -*-
+
+so that the file loads with 'org-passwords-mode' as major mode.
+
 ## Usage
 
 ### Consulting passwords

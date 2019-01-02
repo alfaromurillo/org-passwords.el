@@ -35,6 +35,10 @@
 ;;   (setq org-passwords-file "~/documents/passwords.gpg")
 ;;   (setq org-passwords-random-words-dictionary "/etc/dictionaries-common/words")
 
+;; The first line of org-passwords-file should be:
+;;   # -*- mode: org-passwords -*-
+;; so that the file loads with org-passwords-mode as major mode.
+
 ;; Basic usage:
 
 ;;   `M-x org-passwords' opens the passwords file in
