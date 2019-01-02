@@ -24,8 +24,9 @@
 
 ;; This file contains the code for managing your passwords with
 ;; Org-mode.  It is part of org/contrib (see http://orgmode.org/).  If
-;; you want to contribute with development, or have a problem, do it
-;; here: https://bitbucket.org/alfaromurillo/org-passwords.el
+;; you want to contribute with development, or want to report a
+;; problem, please do it from github
+;; (https://github.com/alfaromurillo/org-passwords.el.git).
 
 ;; A basic setup needs to indicate a passwords file, and a dictionary
 ;; for the random words:
